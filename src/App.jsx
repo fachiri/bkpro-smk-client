@@ -8,12 +8,19 @@ import KonselingDetail from './pages/dashboard/KonselingDetail'
 import Karir from './pages/dashboard/Karir'
 import AuthRoutes from './utils/AuthRoutes'
 import KarirTes from './pages/dashboard/KarirTes'
+import Home from './pages/guest/Home'
+import MateriPembelajaran from './pages/guest/MateriPembelajaran'
+import Tentang from './pages/guest/Tentang'
+import MateriPembelajaranDetail from './pages/guest/MateriPembelajaranDetail'
 
 const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/materi-pembelajaran" element={<MateriPembelajaran />} />
+        <Route path="/materi-pembelajaran/:slug" element={<MateriPembelajaranDetail />} />
+        <Route path="/tentang" element={<Tentang />} />
         <Route element={<AuthRoutes />}>
           <Route path='/login' element={<Login />} />
         </Route>
