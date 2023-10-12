@@ -1,8 +1,15 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import logo from './../../assets/logo.svg'
 import links from './../../constants/sidebarLinks'
 
 const Sidebar = () => {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.clear()
+    navigate('/login')
+  };
+
   return (
     <>
       <div className="hidden sm:flex flex-col items-center w-40 h-screen overflow-hidden text-gray-700 bg-accent rounded sticky left-0 top-0 z-40">
@@ -91,12 +98,12 @@ const Sidebar = () => {
             </div>
           ))} */}
         </div>
-        <a className="flex items-center justify-center w-full h-16 mt-auto bg-accent hover:bg-accent-focus border-t-2 border-accent-focus" href="#">
+        <button onClick={handleLogout} className="flex items-center justify-center w-full h-16 mt-auto bg-accent hover:bg-accent-focus border-t-2 border-accent-focus">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
           </svg>
           <span className="ml-2 text-sm font-medium">Keluar</span>
-        </a>
+        </button>
       </div>
 
       <div className="flex sm:hidden flex-col items-center w-16 h-screen overflow-hidden text-gray-700 bg-accent rounded sticky left-0 top-0 z-40">
