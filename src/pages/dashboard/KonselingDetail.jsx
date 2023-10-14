@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import DashboardLayout from "../../layouts/DashboardLayout"
+import Card from "../../components/card/Card"
 
 const KonselingDetail = () => {
   const counseling = {
@@ -13,16 +14,16 @@ const KonselingDetail = () => {
       <DashboardLayout
         title='Detail Konseling'
       >
-        <section className="px-5 mb-5">
-          <div className="card bg-white shadow p-5">
+        <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">
+          <Card>
             <h2 className="font-bold text-lg mb-3">{counseling.subject}</h2>
             <div>
               {counseling.content}
             </div>
-          </div>
+          </Card>
         </section>
-        <section className="px-5 mb-5">
-          <div className="card bg-white shadow p-5 overflow-y-auto">
+        <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">
+          <Card className="overflow-y-auto">
             <div className="chat chat-start">
               <div className="chat-image avatar">
                 <div className="w-10 rounded-full">
@@ -83,10 +84,10 @@ const KonselingDetail = () => {
               </div>
               <div className="chat-bubble bg-slate-200 text-accent-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum perferendis saepe quibusdam? Assumenda quia enim alias sunt pariatur aspernatur doloribus et, at voluptatibus omnis hic dolores quos corrupti explicabo suscipit?</div>
             </div>
-          </div>
+          </Card>
         </section>
-        <section className="px-5 mb-5">
-          <div className="relative card bg-white shadow p-5 max-h-screen overflow-y-auto">
+        <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">
+          <Card className="hadow p-5 max-h-screen overflow-y-auto">
             <div className="w-full flex space-x-5">
               <textarea name="chat" id="chat" className="textarea textarea-bordered grow resize-none" placeholder="Tulis Pesan..."></textarea>
               <button className="btn btn-accent">
@@ -96,7 +97,7 @@ const KonselingDetail = () => {
                 </svg>
               </button>
             </div>
-          </div>
+          </Card>
         </section>
       </DashboardLayout>
     </>

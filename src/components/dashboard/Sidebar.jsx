@@ -39,7 +39,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="hidden sm:flex flex-col items-center w-40 h-screen overflow-hidden text-gray-700 bg-accent rounded sticky left-0 top-0 z-40">
+      <div className="hidden sm:flex flex-col items-center w-40 h-screen overflow-hidden text-gray-700 bg-accent sm:rounded sticky left-0 top-0 z-40">
         <a className="flex items-center w-full px-3 mt-3" href="#">
           <img src={logo} alt="Logo" className="w-10 h-10" />
           <span className="ml-2 text-sm font-bold">BKPro SMK</span>
@@ -101,23 +101,42 @@ const Sidebar = () => {
         </button>
       </div>
 
-      <div className="flex sm:hidden flex-col items-center w-16 h-screen overflow-hidden text-gray-700 bg-accent rounded sticky left-0 top-0 z-40">
+      <div className="flex sm:hidden flex-col items-center w-16 h-screen overflow-hidden text-gray-700 bg-accent sm:rounded sticky left-0 top-0 z-40">
         <a className="flex items-center justify-center mt-3" href="#">
           <img src={logo} alt="Logo" className="w-10 h-10" />
         </a>
         <div className="flex flex-col items-center mt-3 border-t-2 border-accent-focus">
           {getLinks ?
             getLinks.map((item, idx) => (
-              <NavLink
-                to={item.link}
-                key={idx}
-                className={({ isActive }) => {
-                  return isActive ? "relative flex items-center justify-center w-12 h-12 mt-2 bg-accent-focus rounded text-gray-950" : "relative flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-accent-focus"
-                }}
-              >
-                {item.icon}
-                {!item.hasNotif || <span className="absolute top-0 left-0 w-2 h-2 mt-2 ml-2 bg-accent-content rounded-full"></span>}
-              </NavLink>
+              <div key={idx} className='flex flex-col items-center'>
+                {item.hasSubmenu ? (
+                  <>
+                    <div className="flex flex-col">
+                      {item.submenu.map((subItem, subIdx) => (
+                        <NavLink
+                          to={subItem.link}
+                          key={subIdx}
+                          className={({ isActive }) => {
+                            return isActive ? "relative flex items-center justify-center w-12 h-12 mt-2 bg-accent-focus rounded text-gray-950" : "relative flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-accent-focus"
+                          }}
+                        >
+                          {subItem.icon}
+                        </NavLink>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <NavLink
+                    to={item.link}
+                    className={({ isActive }) => {
+                      return isActive ? "relative flex items-center justify-center w-12 h-12 mt-2 bg-accent-focus rounded text-gray-950" : "relative flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-accent-focus"
+                    }}
+                  >
+                    {item.icon}
+                    {!item.hasNotif || <span className="absolute top-0 left-0 w-2 h-2 mt-2 ml-2 bg-accent-content rounded-full"></span>}
+                  </NavLink>
+                )}
+              </div>
             )) :
             <Loader />
           }

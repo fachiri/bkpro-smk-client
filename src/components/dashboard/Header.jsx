@@ -1,8 +1,8 @@
 const Header = ({ title }) => {
   return (
     <>
-      <header className="p-5 mb-5">
-        <div className="flex justify-between items-center shadow w-full p-5 rounded-2xl text-accent-content bg-accent">
+      <header className="sm:p-5 sm:mb-5">
+        <div className="flex justify-between items-center shadow w-full p-5 sm:rounded-2xl text-accent-content bg-accent">
           <h1 className="font-bold text-lg">
             {title}
           </h1>

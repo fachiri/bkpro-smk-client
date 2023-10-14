@@ -36,7 +36,7 @@ const Karir = () => {
       <DashboardLayout
         title='Karir'
       >
-        <section className="px-5 mb-5">
+        <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">
           <Card
             title="Tentang Tes Karir"
           >
@@ -51,7 +51,7 @@ const Karir = () => {
             </div>
           </Card>
         </section>
-        <section className="px-5 mb-5">
+        <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">
           <Card
             title={"Riwayat Tes Karir"}
           >

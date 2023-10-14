@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import DashboardLayout from "./../../layouts/DashboardLayout"
+import Card from "../../components/card/Card"
 
 const Konseling = () => {
   const counselingSessions = [
@@ -35,9 +36,9 @@ const Konseling = () => {
       <DashboardLayout
         title='Konseling'
       >
-        <section className="px-5 mb-5">
-          <div className="card bg-white shadow">
-            <div className="flex justify-between items-center p-5">
+        <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">
+          <Card className="card bg-white shadow">
+            <div className="flex justify-between items-center">
               <div className="flex space-x-5">
                 <select name="per-page" id="per-page" className="select select-bordered">
                   <option value="5">5</option>
@@ -98,7 +99,7 @@ const Konseling = () => {
                 <button className="join-item btn">»</button>
               </div>
             </div>
-          </div>
+          </Card>
         </section>
       </DashboardLayout>
     </>
