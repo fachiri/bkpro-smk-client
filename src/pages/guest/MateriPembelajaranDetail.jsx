@@ -29,7 +29,7 @@ function MateriPembelajaranDetail() {
         </section>
         <section className="h-screen py-10">
           <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-            <Viewer fileUrl={`/src/assets/materi/${slug}.pdf`} plugins={[defaultLayoutPluginInstance]} />
+            <Viewer fileUrl={`/materi/${slug}.pdf`} plugins={[defaultLayoutPluginInstance]} />
           </Worker>
         </section>
       </GuestLayout>
