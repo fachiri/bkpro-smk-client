@@ -13,7 +13,7 @@ const Loader = () => {
   );
 }
 
-const Sidebar = () => {
+const Sidebar = ({ role }) => {
   const [getLinks, setLinks] = useState(null);
   const navigate = useNavigate()
 
@@ -46,51 +46,47 @@ const Sidebar = () => {
         </a>
         <div className="w-full px-2">
           <div className="flex flex-col w-full mt-3 border-t-2 border-accent-focus">
-            {getLinks ?
-              getLinks.map((item, idx) => (
-                <div key={idx}>
-                  {item.hasSubmenu ? (
-                    <>
-                      <h5 className='text-xs font-bold mt-3 px-3'>{item.name}</h5>
-                      <div className="flex flex-col">
-                        {item.submenu.map((subItem, subIdx) => (
-                          <NavLink
-                            to={subItem.link}
-                            key={subIdx}
-                            className={({ isActive }) => {
-                              return isActive
-                                ? "relative flex items-center w-full py-2 px-3 mt-2 bg-accent-focus rounded"
-                                : "relative flex items-center w-full py-2 px-3 mt-2 rounded hover:bg-accent-focus";
-                            }}
-                          >
-                            {subItem.icon}
-                            <span className="ml-2 text-sm font-medium">{subItem.name}</span>
-                          </NavLink>
-                        ))}
-                      </div>
-                    </>
-                  ) : (
-                    <NavLink
-                      to={item.link}
-                      key={idx}
-                      className={({ isActive }) => {
-                        return isActive
-                          ? "relative flex items-center w-full h-12 px-3 mt-2 bg-accent-focus rounded"
-                          : "relative flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-accent-focus";
-                      }}
-                    >
-                      {item.icon}
-                      <span className="ml-2 text-sm font-medium">{item.name}</span>
-                      {!item.hasNotif || (
-                        <span className="absolute top-0 left-0 w-2 h-2 mt-2 ml-2 bg-accent-content rounded-full"></span>
-                      )}
-                    </NavLink>
-                  )}
-                </div>
-              )) :
-              <Loader />
-            }
-
+            {links[role].map((item, idx) => (
+              <div key={idx}>
+                {item.hasSubmenu ? (
+                  <>
+                    <h5 className='text-xs font-bold mt-3 px-3'>{item.name}</h5>
+                    <div className="flex flex-col">
+                      {item.submenu.map((subItem, subIdx) => (
+                        <NavLink
+                          to={subItem.link}
+                          key={subIdx}
+                          className={({ isActive }) => {
+                            return isActive
+                              ? "relative flex items-center w-full py-2 px-3 mt-2 bg-accent-focus rounded"
+                              : "relative flex items-center w-full py-2 px-3 mt-2 rounded hover:bg-accent-focus";
+                          }}
+                        >
+                          {subItem.icon}
+                          <span className="ml-2 text-sm font-medium">{subItem.name}</span>
+                        </NavLink>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <NavLink
+                    to={item.link}
+                    key={idx}
+                    className={({ isActive }) => {
+                      return isActive
+                        ? "relative flex items-center w-full h-12 px-3 mt-2 bg-accent-focus rounded"
+                        : "relative flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-accent-focus";
+                    }}
+                  >
+                    {item.icon}
+                    <span className="ml-2 text-sm font-medium">{item.name}</span>
+                    {!item.hasNotif || (
+                      <span className="absolute top-0 left-0 w-2 h-2 mt-2 ml-2 bg-accent-content rounded-full"></span>
+                    )}
+                  </NavLink>
+                )}
+              </div>
+            ))}
           </div>
         </div>
         <button onClick={handleLogout} className="flex items-center justify-center w-full h-16 mt-auto bg-accent hover:bg-accent-focus border-t-2 border-accent-focus">
@@ -106,40 +102,37 @@ const Sidebar = () => {
           <img src={logo} alt="Logo" className="w-10 h-10" />
         </a>
         <div className="flex flex-col items-center mt-3 border-t-2 border-accent-focus">
-          {getLinks ?
-            getLinks.map((item, idx) => (
-              <div key={idx} className='flex flex-col items-center'>
-                {item.hasSubmenu ? (
-                  <>
-                    <div className="flex flex-col">
-                      {item.submenu.map((subItem, subIdx) => (
-                        <NavLink
-                          to={subItem.link}
-                          key={subIdx}
-                          className={({ isActive }) => {
-                            return isActive ? "relative flex items-center justify-center w-12 h-12 mt-2 bg-accent-focus rounded text-gray-950" : "relative flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-accent-focus"
-                          }}
-                        >
-                          {subItem.icon}
-                        </NavLink>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <NavLink
-                    to={item.link}
-                    className={({ isActive }) => {
-                      return isActive ? "relative flex items-center justify-center w-12 h-12 mt-2 bg-accent-focus rounded text-gray-950" : "relative flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-accent-focus"
-                    }}
-                  >
-                    {item.icon}
-                    {!item.hasNotif || <span className="absolute top-0 left-0 w-2 h-2 mt-2 ml-2 bg-accent-content rounded-full"></span>}
-                  </NavLink>
-                )}
-              </div>
-            )) :
-            <Loader />
-          }
+          {links[role].map((item, idx) => (
+            <div key={idx} className='flex flex-col items-center'>
+              {item.hasSubmenu ? (
+                <>
+                  <div className="flex flex-col">
+                    {item.submenu.map((subItem, subIdx) => (
+                      <NavLink
+                        to={subItem.link}
+                        key={subIdx}
+                        className={({ isActive }) => {
+                          return isActive ? "relative flex items-center justify-center w-12 h-12 mt-2 bg-accent-focus rounded text-gray-950" : "relative flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-accent-focus"
+                        }}
+                      >
+                        {subItem.icon}
+                      </NavLink>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <NavLink
+                  to={item.link}
+                  className={({ isActive }) => {
+                    return isActive ? "relative flex items-center justify-center w-12 h-12 mt-2 bg-accent-focus rounded text-gray-950" : "relative flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-accent-focus"
+                  }}
+                >
+                  {item.icon}
+                  {!item.hasNotif || <span className="absolute top-0 left-0 w-2 h-2 mt-2 ml-2 bg-accent-content rounded-full"></span>}
+                </NavLink>
+              )}
+            </div>
+          ))}
         </div>
         <a className="flex items-center justify-center w-16 h-16 mt-auto bg-accent hover:bg-accent-focus border-t-2 border-accent-focus" href="#">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

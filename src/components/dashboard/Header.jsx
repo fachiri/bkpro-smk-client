@@ -1,7 +1,7 @@
 const Header = ({ title }) => {
   return (
     <>
-      <header className="sm:p-5 sm:mb-5">
+      <header className="sm:p-5">
         <div className="flex justify-between items-center shadow w-full p-5 sm:rounded-2xl text-accent-content bg-accent">
           <h1 className="font-bold text-lg">
             {title}

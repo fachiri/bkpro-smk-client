@@ -38,7 +38,7 @@ const Konseling = () => {
       >
         <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">
           <Card className="card bg-white shadow">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row gap-5 mb-5 justify-between items-start sm:items-center">
               <div className="flex space-x-5">
                 <select name="per-page" id="per-page" className="select select-bordered">
                   <option value="5">5</option>

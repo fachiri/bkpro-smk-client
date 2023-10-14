@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { toast } from 'react-toastify'
 
 import Card from "../../../components/card/Card"
-import DashboardLayout from "../../../layouts/DashboardLayout"
+import AdminLayout from "../../../layouts/AdminLayout"
 import axios from "./../../../utils/axios"
 
 const Jurusan = () => {
@@ -35,7 +35,7 @@ const Jurusan = () => {
 
   return (
     <>
-      <DashboardLayout
+      <AdminLayout
         title='Jurusan'
       >
         <section className="px-5 mb-5">
@@ -59,7 +59,7 @@ const Jurusan = () => {
             </form>
           </Card>
         </section>
-      </DashboardLayout>
+      </AdminLayout>
     </>
   )
 }

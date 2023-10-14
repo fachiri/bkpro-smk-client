@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { toast } from 'react-toastify'
 
 import Card from "../../../components/card/Card"
-import DashboardLayout from "../../../layouts/DashboardLayout"
+import AdminLayout from "../../../layouts/AdminLayout"
 import axios from "../../../utils/axios"
 
 const Jurusan = () => {
@@ -37,12 +37,12 @@ const Jurusan = () => {
 
   return (
     <>
-      <DashboardLayout
+      <AdminLayout
         title={`Detail Jurusan ${getMajor.major}`}
       >
-        <section className="px-5 mb-5">
+        <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">
           <Card>
-            <div className="flex justify-between items-center p-5">
+            <div className="flex flex-col sm:flex-row gap-5 mb-5 justify-between items-start sm:items-center">
               <div className="flex space-x-5">
                 <select name="per-page" id="per-page" className="select select-bordered">
                   <option value="5">5</option>
@@ -110,7 +110,7 @@ const Jurusan = () => {
             </div>
           </Card>
         </section>
-      </DashboardLayout>
+      </AdminLayout>
     </>
   )
 }
