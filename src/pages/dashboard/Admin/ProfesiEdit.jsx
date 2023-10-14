@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import { toast } from 'react-toastify'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -11,16 +11,12 @@ import axios from "../../../utils/axios"
 const Jurusan = () => {
   const [getProfession, setProfession] = useState({})
   const [getDesc, setDesc] = useState('');
-  const [editorState, setEditorState] = useState(null);
+  const [getSelectedFile, setSelectedFile] = useState(null)
   const params = useParams()
-  
+
   useEffect(() => {
     getData()
   }, []);
-
-  const onEditorStateChange = (editorState) => {
-    setEditorState(editorState);
-  };
 
   const getData = async () => {
     try {
@@ -36,18 +32,21 @@ const Jurusan = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const payload = {
-      code: e.target[0].value.toUpperCase(),
-      profession: e.target[1].value,
-      desc: getDesc
-    }
+    const formData = new FormData();
+    formData.append('code', e.target[0].value.toUpperCase())
+    formData.append('profession', e.target[1].value)
+    formData.append('desc', getDesc)
+    formData.append('file', getSelectedFile)
 
-    toast.promise(new Promise(resolve => resolve(axios.put(`/master/professions/${params.uuid}`, payload))),
+    toast.promise(new Promise(resolve => resolve(axios.put(`/master/professions/${params.uuid}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    }))),
       {
         pending: 'Memuat...',
         success: {
           render({ data }) {
-            // e.target.reset()
             getData()
             return data.data.message
           }
@@ -68,7 +67,7 @@ const Jurusan = () => {
       >
         <section className="px-5 mb-5">
           <Card>
-            <form onSubmit={handleSubmit}>
+            <form encType="multipart/form-data" onSubmit={handleSubmit}>
               <div className="form-control w-full mb-3">
                 <label htmlFor="code" className="label">
                   <span className="label-text text-sm font-medium text-gray-900 dark:text-white">Kode</span>
@@ -90,6 +89,12 @@ const Jurusan = () => {
                   className="input input-bordered w-full"
                   defaultValue={getProfession.profession}
                 />
+              </div>
+              <div className="form-control w-full mb-3">
+                <label htmlFor="desc" className="label">
+                  <span className="label-text text-sm font-medium text-gray-900 dark:text-white">Deskripsi</span>
+                </label>
+                <input onChange={(e) => setSelectedFile(e.target.files[0])} type="file" className="file-input file-input-bordered w-full" />
               </div>
               <div className="form-control w-full mb-3">
                 <label htmlFor="desc" className="label">
