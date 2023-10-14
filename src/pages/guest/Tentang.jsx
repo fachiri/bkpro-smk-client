@@ -4,7 +4,7 @@ function Tentang() {
   return (
     <>
       <GuestLayout>
-        <section className="mt-5 pt-5">
+        <section className="my-10">
           <div className="flex items-center space-x-3 mb-10">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-6 h-6 text-accent">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
