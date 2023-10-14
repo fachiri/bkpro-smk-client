@@ -17,6 +17,10 @@ import Jurusan from './pages/dashboard/Admin/Jurusan'
 import JurusanCreate from './pages/dashboard/Admin/JurusanCreate'
 import JurusanDetail from './pages/dashboard/Admin/JurusanDetail'
 import ProfesiEdit from './pages/dashboard/Admin/ProfesiEdit'
+import MasterMateri from './pages/dashboard/Admin/MasterMateri'
+import MasterMateriCreate from './pages/dashboard/Admin/MasterMateriCreate'
+import MasterMateriDetail from './pages/dashboard/Admin/MasterMateriDetail'
+import MasterMateriEdit from './pages/dashboard/Admin/MasterMateriEdit'
 
 const App = () => {
   return (
@@ -43,6 +47,10 @@ const App = () => {
           <Route path='/admin/master/jurusan/create' element={<JurusanCreate />} />
           <Route path='/admin/master/jurusan/:uuid' element={<JurusanDetail />} />
           <Route path='/admin/master/profesi/:uuid/edit' element={<ProfesiEdit />} />
+          <Route path='/admin/master/materi' element={<MasterMateri />} />
+          <Route path='/admin/master/materi/:uuid' element={<MasterMateriDetail />} />
+          <Route path='/admin/master/materi/:uuid/edit' element={<MasterMateriEdit />} />
+          <Route path='/admin/master/materi/create' element={<MasterMateriCreate />} />
         </Route>
       </Routes>
     </>

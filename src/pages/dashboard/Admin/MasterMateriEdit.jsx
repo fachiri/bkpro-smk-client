@@ -8,9 +8,8 @@ import Card from "../../../components/card/Card"
 import AdminLayout from "../../../layouts/AdminLayout"
 import axios from "../../../utils/axios"
 
-const Jurusan = () => {
-  const [getProfession, setProfession] = useState({})
-  const [getDesc, setDesc] = useState('');
+const MasterMateriEdit = () => {
+  const [getMaterial, setMaterial] = useState({})
   const [getSelectedFile, setSelectedFile] = useState(null)
   const params = useParams()
 
@@ -20,9 +19,8 @@ const Jurusan = () => {
 
   const getData = async () => {
     try {
-      const profession = await axios.get(`/master/professions/${params.uuid}`)
-      setProfession(profession.data.data)
-      setDesc(profession.data.data.desc)
+      const material = await axios.get(`/master/materials/${params.uuid}`)
+      setMaterial(material.data.data)
     } catch (error) {
       toast.error(error.response?.data?.message || error.message)
       console.error(error)
@@ -33,12 +31,11 @@ const Jurusan = () => {
     e.preventDefault()
 
     const formData = new FormData();
-    formData.append('code', e.target[0].value.toUpperCase())
-    formData.append('profession', e.target[1].value)
-    formData.append('desc', getDesc)
+    formData.append('title', e.target[0].value)
+    formData.append('desc', e.target[1].value)
     formData.append('file', getSelectedFile)
 
-    toast.promise(new Promise(resolve => resolve(axios.put(`/master/professions/${params.uuid}`, formData, {
+    toast.promise(new Promise(resolve => resolve(axios.put(`/master/materials/${params.uuid}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       }
@@ -63,46 +60,28 @@ const Jurusan = () => {
   return (
     <>
       <AdminLayout
-        title={`Edit Profesi ${getProfession.profession}`}
+        title={`Edit Materi`}
       >
         <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">
           <Card>
             <form encType="multipart/form-data" onSubmit={handleSubmit}>
               <div className="form-control w-full mb-3">
                 <label htmlFor="code" className="label">
-                  <span className="label-text text-sm font-medium text-gray-900 dark:text-white">Kode</span>
+                  <span className="label-text text-sm font-medium text-gray-900 dark:text-white">Judul Materi</span>
                 </label>
-                <input
-                  type="text"
-                  name="code"
-                  className="input input-bordered w-full uppercase"
-                  defaultValue={getProfession.code}
-                />
+                <input type="text" name="title" defaultValue={getMaterial.title} className="input input-bordered w-full" />
               </div>
               <div className="form-control w-full mb-3">
-                <label htmlFor="profession" className="label">
-                  <span className="label-text text-sm font-medium text-gray-900 dark:text-white">Profesi</span>
+                <label htmlFor="material" className="label">
+                  <span className="label-text text-sm font-medium text-gray-900 dark:text-white">Deskripsi Singkat</span>
                 </label>
-                <input
-                  type="text"
-                  name="profession"
-                  className="input input-bordered w-full"
-                  defaultValue={getProfession.profession}
-                />
+                <textarea name="desc" className="textarea textarea-bordered" defaultValue={getMaterial.desc}></textarea>
               </div>
               <div className="form-control w-full mb-3">
-                <label htmlFor="desc" className="label">
+                <label htmlFor="file" className="label">
                   <span className="label-text text-sm font-medium text-gray-900 dark:text-white">File</span>
                 </label>
-                <input onChange={(e) => setSelectedFile(e.target.files[0])} type="file" className="file-input file-input-bordered w-full" />
-              </div>
-              <div className="form-control w-full mb-3">
-                <label htmlFor="desc" className="label">
-                  <span className="label-text text-sm font-medium text-gray-900 dark:text-white">Deskripsi</span>
-                </label>
-                <div className="mb-12">
-                  <ReactQuill theme="snow" value={getDesc} onChange={setDesc} className="h-screen" />
-                </div>
+                <input name="file" onChange={(e) => setSelectedFile(e.target.files[0])} type="file" className="file-input file-input-sm file-input-md file-input-bordered w-full" />
               </div>
               <div className="mt-5">
                 <button type="submit" className="btn btn-accent">Submit</button>
@@ -115,4 +94,4 @@ const Jurusan = () => {
   )
 }
 
-export default Jurusan
+export default MasterMateriEdit
