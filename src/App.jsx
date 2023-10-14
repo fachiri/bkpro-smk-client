@@ -12,6 +12,11 @@ import Home from './pages/guest/Home'
 import MateriPembelajaran from './pages/guest/MateriPembelajaran'
 import Tentang from './pages/guest/Tentang'
 import MateriPembelajaranDetail from './pages/guest/MateriPembelajaranDetail'
+import AdminDashboard from './pages/dashboard/Admin/AdminDashboard'
+import Jurusan from './pages/dashboard/Admin/Jurusan'
+import JurusanCreate from './pages/dashboard/Admin/JurusanCreate'
+import JurusanDetail from './pages/dashboard/Admin/JurusanDetail'
+import ProfesiEdit from './pages/dashboard/Admin/ProfesiEdit'
 
 const App = () => {
   return (
@@ -24,13 +29,20 @@ const App = () => {
         <Route element={<AuthRoutes />}>
           <Route path='/login' element={<Login />} />
         </Route>
-        <Route element={<PrivateRoutes />}>
+        <Route element={<PrivateRoutes role="SISWA" />}>
           <Route path='/dasbor' element={<Dashboard />} />
           <Route path='/layanan/konseling' element={<Konseling />} />
           <Route path='/layanan/konseling/:uuid' element={<KonselingDetail />} />
           <Route path='/layanan/karir' element={<Karir />} />
           <Route path='/layanan/karir/tes' element={<KarirTes />} />
           <Route path='/materi' element={<Materi />} />
+        </Route>
+        <Route element={<PrivateRoutes role="ADMIN" />}>
+          <Route path='/admin/dasbor' element={<AdminDashboard />} />
+          <Route path='/admin/master/jurusan' element={<Jurusan />} />
+          <Route path='/admin/master/jurusan/create' element={<JurusanCreate />} />
+          <Route path='/admin/master/jurusan/:uuid' element={<JurusanDetail />} />
+          <Route path='/admin/master/profesi/:uuid/edit' element={<ProfesiEdit />} />
         </Route>
       </Routes>
     </>

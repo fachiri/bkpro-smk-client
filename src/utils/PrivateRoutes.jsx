@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import axios from './axios'
 import FullLoading from "./../components/dashboard/FullLoading"
 
-const PrivateRoutes = () => {
+const PrivateRoutes = ({ role }) => {
   const [token, setToken] = useState(null)
 
   useEffect(() => {
@@ -17,7 +17,13 @@ const PrivateRoutes = () => {
     }
 
     axios.get(`/auth/verify-token/${userData.role}`)
-      .then(() => setToken(true))
+      .then((user) => {
+        if (user.data.data.role != role) {
+          return setToken(false)
+        }
+        
+        setToken(true)
+      })
       .catch((error) => {
         toast.error(error.response?.data?.message || error.message)
         return setToken(false)

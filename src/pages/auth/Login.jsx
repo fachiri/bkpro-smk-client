@@ -41,7 +41,7 @@ const Login = () => {
           render({ data }) {
             localStorage.setItem('userData', JSON.stringify(data.data.data.user))
             localStorage.setItem('accessToken', data.data.data.token)
-            navigate("/dasbor")
+            navigate(data.data.data.redirect)
             return data.data.message
           }
         },

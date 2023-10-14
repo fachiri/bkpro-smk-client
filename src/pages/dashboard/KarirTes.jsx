@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 import axios from "./../../utils/axios"
 import { toast } from 'react-toastify'
 import { isEmpty, shuffleArray } from "../../utils"
+import 'react-quill/dist/quill.snow.css';
+import Display from "../../components/richEditor/Display"
 
 const KarirTes = () => {
   const [getIndex, setIndex] = useState(0)
@@ -112,7 +114,7 @@ const KarirTes = () => {
                           {profession}
                         </div>
                         <div className="collapse-content text-base">
-                          <div dangerouslySetInnerHTML={{ __html: desc }} />
+                          <Display desc={desc} />
                         </div>
                       </div>
                     ))}
