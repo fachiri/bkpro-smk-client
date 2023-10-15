@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import DashboardLayout from "../../layouts/DashboardLayout"
 import Card from "../../components/card/Card"
 import { useEffect, useState } from "react"
@@ -15,6 +15,7 @@ const KarirTes = () => {
   const [getFacts, setFacts] = useState(null)
   const [getIsFinish, setIsFinish] = useState(false)
   const [getIsLoading, setIsLoading] = useState(true)
+  const navigate = useNavigate()
 
   const handleAnswer = async (code, choice) => {
     try {
@@ -92,7 +93,30 @@ const KarirTes = () => {
     } catch (error) {
       console.error('Error downloading file:', error);
     }
-  };
+  }
+
+  const handleSave = async () => {
+    const payload = {
+      facts: getFacts
+    }
+
+    toast.promise(new Promise(resolve => resolve(axios.post('/tests', payload))),
+      {
+        pending: 'Memuat...',
+        success: {
+          render({ data }) {
+            navigate(`/layanan/karir/tes/${data.data.data.uuid}`)
+            return data.data.message
+          }
+        },
+        error: {
+          render({ data }) {
+            return data.response?.data?.message || data.message
+          }
+        }
+      }
+    )
+  }
 
   return (
     <>
@@ -119,7 +143,7 @@ const KarirTes = () => {
                   <div className="flex flex-wrap gap-3 mb-5">
                     {getProfessions.map(({ profession, file }, idx) => (
                       file &&
-                      <button onClick={() => downloadFile(`http://localhost:5000/uploads/profesi/${file}`, profession)} className="btn btn-info">
+                      <button key={idx} onClick={() => downloadFile(`http://localhost:5000/uploads/profesi/${file}`, profession)} className="btn btn-info">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                         </svg>
@@ -127,7 +151,7 @@ const KarirTes = () => {
                       </button>
                     )
                     )}
-                    <button className="btn btn-accent">
+                    <button onClick={handleSave} className="btn btn-accent">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9" />
                       </svg>
@@ -155,7 +179,7 @@ const KarirTes = () => {
               {isEmpty(getQuestions)
                 ?
                 <div className="grid place-items-center gap-5">
-                  <p className="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex asperiores repudiandae laborum fugit molestiae eius voluptates sapiente est nobis cumque?</p>
+                  <p className="text-center max-w-lg">Tolong jawab pertanyaan-pertanyaan yang akan diajukan dengan jawaban <span className="font-bold text-info">YA</span> atau <span className="font-bold text-error">TIDAK</span>. Mohon tetap jujur dalam menjawab untuk hasil yang optimal. Terima kasih.</p>
                   <div>
                     <button className="btn btn-accent" onClick={() => handleAnswer()}>Mulai Sekarang</button>
                   </div>
@@ -169,8 +193,8 @@ const KarirTes = () => {
                     <p className="text-lg">{getQuestions[getIndex].competency}</p>
                   </div>
                   <div className="space-x-3">
-                    <button className="btn btn-secondary w-28" disabled={getIsLoading} onClick={() => handleAnswer(getQuestions[getIndex].code, false)}>Tidak</button>
-                    <button className="btn btn-primary w-28" disabled={getIsLoading} onClick={() => handleAnswer(getQuestions[getIndex].code, true)}>Ya</button>
+                    <button className="btn btn-error w-28" disabled={getIsLoading} onClick={() => handleAnswer(getQuestions[getIndex].code, false)}>Tidak</button>
+                    <button className="btn btn-info w-28" disabled={getIsLoading} onClick={() => handleAnswer(getQuestions[getIndex].code, true)}>Ya</button>
                   </div>
                 </div>
               }

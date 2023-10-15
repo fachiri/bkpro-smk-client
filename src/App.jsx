@@ -21,6 +21,8 @@ import MasterMateri from './pages/dashboard/Admin/MasterMateri'
 import MasterMateriCreate from './pages/dashboard/Admin/MasterMateriCreate'
 import MasterMateriDetail from './pages/dashboard/Admin/MasterMateriDetail'
 import MasterMateriEdit from './pages/dashboard/Admin/MasterMateriEdit'
+import MateriDetail from './pages/dashboard/MateriDetail'
+import KarirTesDetail from './pages/dashboard/KarirTesDetail'
 
 const App = () => {
   return (
@@ -39,7 +41,9 @@ const App = () => {
           <Route path='/layanan/konseling/:uuid' element={<KonselingDetail />} />
           <Route path='/layanan/karir' element={<Karir />} />
           <Route path='/layanan/karir/tes' element={<KarirTes />} />
+          <Route path='/layanan/karir/tes/:uuid' element={<KarirTesDetail />} />
           <Route path='/materi' element={<Materi />} />
+          <Route path='/materi/:uuid' element={<MateriDetail />} />
         </Route>
         <Route element={<PrivateRoutes role="ADMIN" />}>
           <Route path='/admin/dasbor' element={<AdminDashboard />} />

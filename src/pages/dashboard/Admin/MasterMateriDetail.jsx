@@ -8,7 +8,7 @@ import Card from "../../../components/card/Card"
 import AdminLayout from "../../../layouts/AdminLayout"
 import axios from "../../../utils/axios"
 
-const Jurusan = () => {
+const MasterMateriDetail = () => {
   const [getMaterial, setMaterial] = useState({})
   const defaultLayoutPluginInstance = defaultLayoutPlugin()
   const params = useParams()
@@ -104,7 +104,7 @@ const Jurusan = () => {
               <div className="divider my-1"></div>
               <div>
                 <h5 className="font-bold mb-2">File</h5>
-                <div>
+                <div className="h-96">
                   <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
                     <Viewer fileUrl={`${getMaterial.file}`} plugins={[defaultLayoutPluginInstance]} />
                   </Worker>
@@ -118,4 +118,4 @@ const Jurusan = () => {
   )
 }
 
-export default Jurusan
+export default MasterMateriDetail
