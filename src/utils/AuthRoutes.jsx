@@ -13,7 +13,7 @@ const AuthRoutes = () => {
       return setToken(false)
     }
     axios.get(`/auth/verify-token/${userData.role}`)
-      .then((user) => {
+    .then((user) => {
         if (user.data.data.role == 'ADMIN') {
           return navigate('/admin/dasbor')
         }

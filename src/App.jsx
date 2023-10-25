@@ -23,27 +23,28 @@ import MasterMateriDetail from './pages/dashboard/Admin/MasterMateriDetail'
 import MasterMateriEdit from './pages/dashboard/Admin/MasterMateriEdit'
 import MateriDetail from './pages/dashboard/MateriDetail'
 import KarirTesDetail from './pages/dashboard/KarirTesDetail'
+import KonselingCreate from './pages/dashboard/KonselingCreate'
+import Keamanan from './pages/dashboard/Keamanan'
 
 const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/materi-pembelajaran" element={<MateriPembelajaran />} />
-        <Route path="/materi-pembelajaran/:slug" element={<MateriPembelajaranDetail />} />
-        <Route path="/tentang" element={<Tentang />} />
+        <Route path="/" element={<Navigate to="/dasbor" />} />
         <Route element={<AuthRoutes />}>
           <Route path='/login' element={<Login />} />
         </Route>
         <Route element={<PrivateRoutes role="SISWA" />}>
           <Route path='/dasbor' element={<Dashboard />} />
           <Route path='/layanan/konseling' element={<Konseling />} />
+          <Route path='/layanan/konseling/create' element={<KonselingCreate />} />
           <Route path='/layanan/konseling/:uuid' element={<KonselingDetail />} />
           <Route path='/layanan/karir' element={<Karir />} />
           <Route path='/layanan/karir/tes' element={<KarirTes />} />
           <Route path='/layanan/karir/tes/:uuid' element={<KarirTesDetail />} />
           <Route path='/materi' element={<Materi />} />
           <Route path='/materi/:uuid' element={<MateriDetail />} />
+          <Route path='/pengaturan/keamanan' element={<Keamanan />} />
         </Route>
         <Route element={<PrivateRoutes role="ADMIN" />}>
           <Route path='/admin/dasbor' element={<AdminDashboard />} />

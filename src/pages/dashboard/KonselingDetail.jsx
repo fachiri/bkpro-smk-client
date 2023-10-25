@@ -1,12 +1,31 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { toast } from "react-toastify"
+
 import DashboardLayout from "../../layouts/DashboardLayout"
 import Card from "../../components/card/Card"
+import axios from "../../utils/axios"
 
 const KonselingDetail = () => {
-  const counseling = {
-    uuid: 'd4f5367c-53c1-4a21-823b-05532a2012a1',
-    subject: 'Menghadapi Stres Ujian Akhir',
-    content: 'Saya merasa sangat stres menghadapi ujian akhir tahun ini. Saya ingin mendapatkan strategi untuk mengatasi stres ini dan mempersiapkan diri sebaik mungkin.'
+  const [getCounseling, setCounseling] = useState({})
+  const [getIsLoading, setIsLoading] = useState([]);
+  const params = useParams()
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  const fetchData = async () => {
+    try {
+      setIsLoading(prevState => [...prevState, 'fetch-counseling']);
+
+      const response = await axios.get(`/counseling/${params.uuid}`)
+      setCounseling(response.data.data)
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
+    } finally {
+      setIsLoading(prevState => prevState.filter(item => item !== 'fetch-counseling'));
+    }
   }
 
   return (
@@ -16,10 +35,18 @@ const KonselingDetail = () => {
       >
         <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">
           <Card>
-            <h2 className="font-bold text-lg mb-3">{counseling.subject}</h2>
-            <div>
-              {counseling.content}
-            </div>
+            {getIsLoading.includes('fetch-counseling') ? (
+              <div className="text-center mt-3">
+                <span className="loading loading-dots text-neutral"></span>
+              </div>
+            ) : (
+              <>
+                <h2 className="font-bold text-lg mb-3">{getCounseling.subject}</h2>
+                <div>
+                  {getCounseling.content}
+                </div>
+              </>
+            )}
           </Card>
         </section>
         <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">

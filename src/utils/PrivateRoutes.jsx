@@ -21,7 +21,6 @@ const PrivateRoutes = ({ role }) => {
         if (user.data.data.role != role) {
           return setToken(false)
         }
-        
         setToken(true)
       })
       .catch((error) => {

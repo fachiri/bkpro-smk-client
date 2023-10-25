@@ -1,35 +1,30 @@
 import { Link } from "react-router-dom"
+import { useEffect, useState } from "react";
+
 import DashboardLayout from "./../../layouts/DashboardLayout"
 import Card from "../../components/card/Card"
+import axios from "./../../utils/axios"
+import { toast } from 'react-toastify'
 
 const Konseling = () => {
-  const counselingSessions = [
-    {
-      uuid: 'd4f5367c-53c1-4a21-823b-05532a2012a1',
-      subject: 'Menghadapi Stres Ujian Akhir',
-      content: 'Saya merasa sangat stres menghadapi ujian akhir tahun ini. Saya ingin mendapatkan strategi untuk mengatasi stres ini dan mempersiapkan diri sebaik mungkin.'
-    },
-    {
-      uuid: 'e6f24c42-80ad-4d62-a253-cb0ef23bb77d',
-      subject: 'Pilihan Karir dan Rencana Masa Depan',
-      content: 'Saya bingung tentang pilihan karir yang harus saya ambil setelah lulus dari SMK. Saya ingin berbicara tentang rencana masa depan dan bagaimana saya bisa mencapai tujuan karir saya.'
-    },
-    {
-      uuid: '37e0d8a1-50e4-4e8d-9c6c-8f7545a0c4b2',
-      subject: 'Mengatasi Tekanan Teman Sebaya',
-      content: 'Saya merasa tertekan oleh teman-teman sebaya saya untuk melakukan hal-hal yang saya tidak nyaman lakukan. Bagaimana cara saya mengatasi tekanan ini dan tetap setia pada nilai-nilai saya?'
-    },
-    {
-      uuid: '9bfb33f4-9e42-47f7-9b67-4cc08e3184f7',
-      subject: 'Pengembangan Keterampilan Belajar',
-      content: 'Saya ingin meningkatkan keterampilan belajar saya agar bisa lebih efektif dalam menghadapi pelajaran di sekolah. Bisakah Anda membantu saya dengan strategi belajar yang lebih baik?'
-    },
-    {
-      uuid: 'cabc47ac-89d4-4d90-a795-5d5664239d78',
-      subject: 'Mengelola Waktu dan Tugas Sekolah',
-      content: 'Saya sering merasa kewalahan dengan tugas-tugas sekolah dan sulit mengelola waktu saya. Bagaimana saya bisa lebih efisien dalam mengatasi tugas-tugas ini?'
+  const [getCounselings, setCounselings] = useState([]);
+  const [getIsLoading, setIsLoading] = useState([]);
+
+  useEffect(() => {
+    getData()
+  }, []);
+
+  const getData = async () => {
+    try {
+      setIsLoading(prevState => [...prevState, 'fetch-counselings']);
+      const counselings = await axios.get(`/counseling`)
+      setCounselings(counselings.data.data)
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
+    } finally {
+      setIsLoading(prevState => prevState.filter(item => item !== 'fetch-counselings'));
     }
-  ]
+  }
 
   return (
     <>
@@ -59,36 +54,46 @@ const Konseling = () => {
                   </div>
                 </form>
               </div>
-              <button className="btn btn-accent">
+              <Link to="create" className="btn btn-accent">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
-                Buat Tiket
-              </button>
+                Mulai Konseling
+              </Link>
             </div>
             <div className="overflow-x-auto">
               <table className="table">
                 <thead>
                   <tr>
+                    <th>Status</th>
                     <th>Subjek</th>
                     <th>Isi</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  {counselingSessions.map((item, idx) => (
-                    <tr key={idx} className="hover">
-                      <td>{item.subject}</td>
-                      <td>{item.content}</td>
-                      <th>
-                        <Link to={item.uuid} className="btn btn-xs h-10 text-accent-focus">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-                          </svg>
-                        </Link>
-                      </th>
+                  {getIsLoading.includes('fetch-counselings') ? (
+                    <tr>
+                      <td colSpan={3} className="text-center">
+                        <span className="loading loading-dots text-neutral"></span>
+                      </td>
                     </tr>
-                  ))}
+                  ) : (
+                    getCounselings.map((item, idx) => (
+                      <tr key={idx} className="hover">
+                        <td className="align-top">{item.status}</td>
+                        <td className="align-top">{item.subject}</td>
+                        <td className="align-top">{item.content}</td>
+                        <td className="align-top">
+                          <Link to={item.uuid} className="btn btn-xs h-10 text-accent-focus">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                            </svg>
+                          </Link>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
