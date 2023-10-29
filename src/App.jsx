@@ -25,6 +25,11 @@ import MateriDetail from './pages/dashboard/MateriDetail'
 import KarirTesDetail from './pages/dashboard/KarirTesDetail'
 import KonselingCreate from './pages/dashboard/KonselingCreate'
 import Keamanan from './pages/dashboard/Keamanan'
+import MasterPengguna from './pages/dashboard/Admin/MasterPengguna'
+import MasterPenggunaDetail from './pages/dashboard/Admin/MasterPenggunaDetail'
+import MasterPenggunaEdit from './pages/dashboard/Admin/MasterPenggunaEdit'
+import MasterPenggunaCreate from './pages/dashboard/Admin/MasterPenggunaCreate'
+import GuruDashboard from './pages/dashboard/Guru/GuruDashboard'
 
 const App = () => {
   return (
@@ -56,6 +61,13 @@ const App = () => {
           <Route path='/admin/master/materi/:uuid' element={<MasterMateriDetail />} />
           <Route path='/admin/master/materi/:uuid/edit' element={<MasterMateriEdit />} />
           <Route path='/admin/master/materi/create' element={<MasterMateriCreate />} />
+          <Route path='/admin/master/pengguna' element={<MasterPengguna />} />
+          <Route path='/admin/master/pengguna/:uuid' element={<MasterPenggunaDetail />} />
+          <Route path='/admin/master/pengguna/:uuid/edit' element={<MasterPenggunaEdit />} />
+          <Route path='/admin/master/pengguna/create' element={<MasterPenggunaCreate />} />
+        </Route>
+        <Route path='/guru' element={<PrivateRoutes role="GURU" />}>
+          <Route path='dasbor' element={<GuruDashboard />} />
         </Route>
       </Routes>
     </>
