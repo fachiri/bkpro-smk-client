@@ -30,6 +30,13 @@ import MasterPenggunaDetail from './pages/dashboard/Admin/MasterPenggunaDetail'
 import MasterPenggunaEdit from './pages/dashboard/Admin/MasterPenggunaEdit'
 import MasterPenggunaCreate from './pages/dashboard/Admin/MasterPenggunaCreate'
 import GuruDashboard from './pages/dashboard/Guru/GuruDashboard'
+import MasterSiswa from './pages/dashboard/Guru/MasterSiswa'
+import MasterSiswaDetail from './pages/dashboard/Guru/MasterSiswaDetail'
+import MasterSiswaEdit from './pages/dashboard/Guru/MasterSiswaEdit'
+import MasterGuruMateri from './pages/dashboard/Guru/MasterMateri'
+import MasterGuruMateriCreate from './pages/dashboard/Guru/MasterMateriCreate'
+import MasterGuruMateriDetail from './pages/dashboard/Guru/MasterMateriDetail'
+import MasterGuruMateriEdit from './pages/dashboard/Guru/MasterMateriEdit'
 
 const App = () => {
   return (
@@ -68,6 +75,15 @@ const App = () => {
         </Route>
         <Route path='/guru' element={<PrivateRoutes role="GURU" />}>
           <Route path='dasbor' element={<GuruDashboard />} />
+          <Route path='master'>
+            <Route path='siswa' element={<MasterSiswa />} />
+            <Route path='siswa/:uuid' element={<MasterSiswaDetail />} />
+            <Route path='siswa/:uuid/edit' element={<MasterSiswaEdit />} />
+            <Route path='materi' element={<MasterGuruMateri />} />
+            <Route path='materi/create' element={<MasterGuruMateriCreate />} />
+            <Route path='materi/:uuid' element={<MasterGuruMateriDetail />} />
+            <Route path='materi/:uuid/edit' element={<MasterGuruMateriEdit />} />
+          </Route>
         </Route>
       </Routes>
     </>

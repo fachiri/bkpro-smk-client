@@ -63,8 +63,8 @@ const MasterPengguna = () => {
                 <thead>
                   <tr>
                     <th>Nama</th>
+                    <th>Username</th>
                     <th>Nomor Induk</th>
-                    <th>Email</th>
                     <th>Role</th>
                     <th></th>
                   </tr>
@@ -73,8 +73,8 @@ const MasterPengguna = () => {
                   {getData.map((data, idx) => (
                     <tr key={idx} className="hover">
                       <td className="align-top">{data.name}</td>
+                      <td className="align-top">{data.username}</td>
                       <td className="align-top">{data.master_number}</td>
-                      <td className="align-top">{data.email ?? '-'}</td>
                       <td className="align-top">{data.role}</td>
                       <th className="flex space-x-3 align-top">
                         <Link to={data.uuid} className="btn btn-xs h-10 text-accent-focus">

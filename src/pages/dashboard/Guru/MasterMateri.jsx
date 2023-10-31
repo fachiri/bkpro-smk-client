@@ -3,20 +3,20 @@ import { useEffect, useState } from "react"
 import { toast } from 'react-toastify'
 
 import Card from "../../../components/card/Card"
-import AdminLayout from "../../../layouts/AdminLayout"
+import GuruLayout from "../../../layouts/GuruLayout"
 import axios from "../../../utils/axios"
 
-const MasterPengguna = () => {
-  const [getData, setData] = useState([]);
+const MasterMateri = () => {
+  const [getMaterials, setMaterials] = useState([]);
 
   useEffect(() => {
-    fetchData()
+    getData()
   }, []);
 
-  const fetchData = async () => {
+  const getData = async () => {
     try {
-      const users = await axios.get(`/master/users`)
-      setData(users.data.data)
+      const materials = await axios.get(`/master/materials`)
+      setMaterials(materials.data.data)
     } catch (error) {
       toast.error(error.response?.data?.message || error.message)
       console.error(error)
@@ -25,8 +25,8 @@ const MasterPengguna = () => {
 
   return (
     <>
-      <AdminLayout
-        title='Pengguna'
+      <GuruLayout
+        title='Materi'
       >
         <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">
           <Card>
@@ -62,20 +62,16 @@ const MasterPengguna = () => {
               <table className="table">
                 <thead>
                   <tr>
-                    <th>Nama</th>
-                    <th>Nomor Induk</th>
-                    <th>Email</th>
-                    <th>Role</th>
+                    <th>Judul Materi</th>
+                    <th>Deskripsi</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  {getData.map((data, idx) => (
+                  {getMaterials.map((data, idx) => (
                     <tr key={idx} className="hover">
-                      <td className="align-top">{data.name}</td>
-                      <td className="align-top">{data.master_number}</td>
-                      <td className="align-top">{data.email ?? '-'}</td>
-                      <td className="align-top">{data.role}</td>
+                      <td className="align-top">{data.title}</td>
+                      <td className="align-top">{data.desc}</td>
                       <th className="flex space-x-3 align-top">
                         <Link to={data.uuid} className="btn btn-xs h-10 text-accent-focus">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -97,9 +93,9 @@ const MasterPengguna = () => {
             </div>
           </Card>
         </section>
-      </AdminLayout>
+      </GuruLayout>
     </>
   )
 }
 
-export default MasterPengguna
+export default MasterMateri

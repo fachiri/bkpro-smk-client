@@ -3,10 +3,10 @@ import { useEffect, useState } from "react"
 import { toast } from 'react-toastify'
 
 import Card from "../../../components/card/Card"
-import AdminLayout from "../../../layouts/AdminLayout"
+import GuruLayout from "../../../layouts/GuruLayout"
 import axios from "../../../utils/axios"
 
-const MasterPenggunaDetail = () => {
+const MasterSiswaDetail = () => {
   const [getData, setData] = useState({})
   const params = useParams()
   const navigate = useNavigate()
@@ -34,7 +34,7 @@ const MasterPenggunaDetail = () => {
         pending: 'Menghapus...',
         success: {
           render({ data }) {
-            navigate('/admin/master/pengguna')
+            navigate('/guru/master/siswa')
             return data.data.message
           }
         },
@@ -49,8 +49,8 @@ const MasterPenggunaDetail = () => {
 
   return (
     <>
-      <AdminLayout
-        title="Detail Pengguna"
+      <GuruLayout
+        title="Detail Siswa"
       >
         <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">
           <Card>
@@ -96,31 +96,31 @@ const MasterPenggunaDetail = () => {
               </div>
               <div className="divider my-1"></div>
               <div>
-                <h5 className="font-bold mb-2">Username</h5>
-                <div>
-                  {getData.username}
-                </div>
-              </div>
-              <div className="divider my-1"></div>
-              <div>
-                <h5 className="font-bold mb-2">Role</h5>
-                <div>
-                  {getData.role}
-                </div>
-              </div>
-              <div className="divider my-1"></div>
-              <div>
-                <h5 className="font-bold mb-2">Nomor Induk</h5>
+                <h5 className="font-bold mb-2">NISN</h5>
                 <div>
                   {getData.master_number}
+                </div>
+              </div>
+              <div className="divider my-1"></div>
+              <div>
+                <h5 className="font-bold mb-2">Jurusan</h5>
+                <div>
+                  {getData.major?.major}
+                </div>
+              </div>
+              <div className="divider my-1"></div>
+              <div>
+                <h5 className="font-bold mb-2">Kelas</h5>
+                <div>
+                  {getData.class}
                 </div>
               </div>
             </div>
           </Card>
         </section>
-      </AdminLayout>
+      </GuruLayout>
     </>
   )
 }
 
-export default MasterPenggunaDetail
+export default MasterSiswaDetail

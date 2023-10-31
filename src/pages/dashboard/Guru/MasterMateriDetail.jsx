@@ -1,24 +1,27 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { toast } from 'react-toastify'
+import { Worker, Viewer } from '@react-pdf-viewer/core';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 import Card from "../../../components/card/Card"
-import AdminLayout from "../../../layouts/AdminLayout"
+import GuruLayout from "../../../layouts/GuruLayout"
 import axios from "../../../utils/axios"
 
-const MasterPenggunaDetail = () => {
-  const [getData, setData] = useState({})
+const MasterMateriDetail = () => {
+  const [getMaterial, setMaterial] = useState({})
+  const defaultLayoutPluginInstance = defaultLayoutPlugin()
   const params = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetchData()
+    getData()
   }, []);
 
-  const fetchData = async () => {
+  const getData = async () => {
     try {
-      const user = await axios.get(`/master/users/${params.uuid}`)
-      setData(user.data.data)
+      const material = await axios.get(`/master/materials/${params.uuid}`)
+      setMaterial(material.data.data)
     } catch (error) {
       toast.error(error.response?.data?.message || error.message)
       console.error(error)
@@ -26,15 +29,12 @@ const MasterPenggunaDetail = () => {
   }
 
   const handleDelete = async () => {
-    const closeButton = document.getElementById('close-btn');
-    closeButton.click();
-
-    toast.promise(new Promise(resolve => resolve(axios.delete(`/master/users/${params.uuid}`))),
+    toast.promise(new Promise(resolve => resolve(axios.delete(`/master/materials/${params.uuid}`))),
       {
         pending: 'Menghapus...',
         success: {
           render({ data }) {
-            navigate('/admin/master/pengguna')
+            navigate('/guru/master/materi')
             return data.data.message
           }
         },
@@ -49,8 +49,8 @@ const MasterPenggunaDetail = () => {
 
   return (
     <>
-      <AdminLayout
-        title="Detail Pengguna"
+      <GuruLayout
+        title="Detail Materi"
       >
         <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">
           <Card>
@@ -71,7 +71,7 @@ const MasterPenggunaDetail = () => {
                 <dialog id="delete-btn" className="modal">
                   <div className="modal-box">
                     <h3 className="font-bold text-lg">Peringatan</h3>
-                    <p className="py-4">Anda akan menghapus data <b>"{getData.name}"</b></p>
+                    <p className="py-4">Anda akan menghapus materi <b>"{getMaterial.title}"</b></p>
                     <div className="modal-action">
                       <button onClick={handleDelete} className="btn btn-error">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -80,7 +80,7 @@ const MasterPenggunaDetail = () => {
                         Hapus
                       </button>
                       <form method="dialog">
-                        <button className="btn" id="close-btn">Batal</button>
+                        <button className="btn">Batal</button>
                       </form>
                     </div>
                   </div>
@@ -89,38 +89,33 @@ const MasterPenggunaDetail = () => {
             </div>
             <div className="flex flex-col w-full">
               <div>
-                <h5 className="font-bold mb-2">Nama</h5>
+                <h5 className="font-bold mb-2">Judul</h5>
                 <div>
-                  {getData.name}
+                  {getMaterial.title}
                 </div>
               </div>
               <div className="divider my-1"></div>
               <div>
-                <h5 className="font-bold mb-2">Role</h5>
+                <h5 className="font-bold mb-2">Deskripsi</h5>
                 <div>
-                  {getData.role}
+                  {getMaterial.desc}
                 </div>
               </div>
               <div className="divider my-1"></div>
               <div>
-                <h5 className="font-bold mb-2">Nomor Induk</h5>
-                <div>
-                  {getData.master_number}
-                </div>
-              </div>
-              <div className="divider my-1"></div>
-              <div>
-                <h5 className="font-bold mb-2">Email</h5>
-                <div>
-                  {getData.email ?? '-'}
+                <h5 className="font-bold mb-2">File</h5>
+                <div className="h-96">
+                  <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                    <Viewer fileUrl={`${getMaterial.file}`} plugins={[defaultLayoutPluginInstance]} />
+                  </Worker>
                 </div>
               </div>
             </div>
           </Card>
         </section>
-      </AdminLayout>
+      </GuruLayout>
     </>
   )
 }
 
-export default MasterPenggunaDetail
+export default MasterMateriDetail

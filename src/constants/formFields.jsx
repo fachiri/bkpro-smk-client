@@ -1,12 +1,12 @@
 const loginFields = [
   {
-    labelText: "Nomor Induk",
+    labelText: "Username",
     labelFor: "masterNumber",
     id: "masterNumber",
     name: "masterNumber",
     type: "text",
     autoComplete: "text",
-    placeholder: "NIS / NIP"
+    placeholder: "Username / NIS / NIP"
   },
   {
     labelText: "Password",
