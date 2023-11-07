@@ -2,12 +2,12 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 
-import DashboardLayout from "../../layouts/DashboardLayout"
-import Card from "../../components/card/Card"
-import axios from "../../utils/axios"
-import Chat from "../../components/chat/Chat"
+import GuruLayout from "../../../layouts/GuruLayout"
+import Card from "../../../components/card/Card"
+import axios from "../../../utils/axios"
+import Chat from "../../../components/chat/Chat"
 
-const KonselingDetail = () => {
+const MasterKonselingDetail = () => {
   const [getCounseling, setCounseling] = useState({})
   const [getIsLoading, setIsLoading] = useState([]);
   const [chat, setChat] = useState('');
@@ -29,6 +29,7 @@ const KonselingDetail = () => {
 
     // Clean up the interval when the component is unmounted
     return () => {
+      console.log('unmounted')
       clearInterval(intervalId);
     };
   }, []);
@@ -36,7 +37,7 @@ const KonselingDetail = () => {
   const fetchData = async () => {
     try {
       setIsLoading(prevState => [...prevState, 'fetch-counseling']);
-      const response = await axios.get(`/counseling/${params.uuid}`)
+      const response = await axios.get(`/master/counselings/${params.uuid}`)
       setCounseling(response.data.data)
       setUserId(response.data.userId)
     } catch (error) {
@@ -66,6 +67,43 @@ const KonselingDetail = () => {
           render({ data }) {
             e.target.reset()
             setChat('')
+            fetchData()
+            return data.data.message
+          }
+        },
+        error: {
+          render({ data }) {
+            return data.response?.data?.message || data.message
+          }
+        }
+      }
+    )
+  }
+
+  const handleStatus = async () => {
+    let status
+
+    switch (getCounseling.status) {
+      case 'PENDING':
+        status = 'BERLANGSUNG'
+        break;
+
+      case 'BERLANGSUNG':
+        status = 'SELESAI'
+        break;
+
+      default:
+        status = 'PENDING'
+        break;
+    }
+
+    toast.promise(new Promise(resolve => resolve(axios.put(`/master/counselings/${params.uuid}`, { status }))),
+      {
+        pending: 'Set status...',
+        success: {
+          render({ data }) {
+            fetchData()
+            fetchChat()
             return data.data.message
           }
         },
@@ -80,7 +118,7 @@ const KonselingDetail = () => {
 
   return (
     <>
-      <DashboardLayout
+      <GuruLayout
         title='Detail Konseling'
       >
         <section className="sm:px-5 sm:mb-5 border-b-2 border-gray-100 sm:border-none">
@@ -97,9 +135,23 @@ const KonselingDetail = () => {
                     {getCounseling.content}
                   </div>
                 </div>
-                <button className={`btn ${getCounseling.status === 'SELESAI' ? 'bg-success' : getCounseling.status === 'BERLANGSUNG' ? 'bg-info' : ''}`}>
-                  {getCounseling.status}
-                </button>
+                {getCounseling.status == 'SELESAI' ?
+                  <button className="btn btn-success">{getCounseling.status}</button>
+                  :
+                  <button className={`btn ${getCounseling.status == 'BERLANGSUNG' ? 'btn-info' : ''}`} onClick={() => document.getElementById('change-status').showModal()}>{getCounseling.status}</button>
+                }
+                <dialog id="change-status" className="modal">
+                  <div className="modal-box">
+                    <h3 className="font-bold text-lg">Set Status</h3>
+                    <p className="py-4">Set Status Konseling Ke {getCounseling.status == 'PENDING' ? 'BERLANGSUNG' : 'SELESAI'}?</p>
+                    <div className="modal-action">
+                      <form method="dialog">
+                        <button onClick={handleStatus} className="btn btn-accent me-2">Submit</button>
+                        <button className="btn">Close</button>
+                      </form>
+                    </div>
+                  </div>
+                </dialog>
               </div>
             )}
           </Card>
@@ -138,9 +190,9 @@ const KonselingDetail = () => {
             null
           }
         </section>
-      </DashboardLayout>
+      </GuruLayout>
     </>
   )
 }
 
-export default KonselingDetail
+export default MasterKonselingDetail

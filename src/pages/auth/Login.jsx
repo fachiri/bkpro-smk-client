@@ -72,14 +72,14 @@ const Login = () => {
               value={role}
               onChange={handleSelectChange}
               options={roleOptions}
-              isSearchable={true}
+              // isSearchable={true}
               placeholder={"Pilih Salah Satu"}
               classNames={{
                 menuButton: ({ isDisabled }) => (
                   `flex py-1 pl-1 text-gray-400 border border-gray-300 rounded-lg focus:outline focus:outline-offset-2 focus:outline-2 focus:outline-gray-300`
                 ),
                 listItem: ({ isSelected }) => (`block px-2 py-3 mb-1 cursor-pointer select-none truncate rounded ${isSelected
-                  ? `text-gray-500 bg-gray-100`
+                  ? `text-gray-500 bg-accent`
                   : `text-gray-500 hover:bg-gray-100 hover:text-gray-600`
                   }
               `)

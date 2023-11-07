@@ -37,6 +37,9 @@ import MasterGuruMateri from './pages/dashboard/Guru/MasterMateri'
 import MasterGuruMateriCreate from './pages/dashboard/Guru/MasterMateriCreate'
 import MasterGuruMateriDetail from './pages/dashboard/Guru/MasterMateriDetail'
 import MasterGuruMateriEdit from './pages/dashboard/Guru/MasterMateriEdit'
+import MasterKonseling from './pages/dashboard/Guru/MasterKonseling'
+import MasterKonselingDetail from './pages/dashboard/Guru/MasterKonselingDetail'
+import JurusanProfesiCreate from './pages/dashboard/Admin/JurusanProfesiCreate'
 
 const App = () => {
   return (
@@ -63,6 +66,7 @@ const App = () => {
           <Route path='/admin/master/jurusan' element={<Jurusan />} />
           <Route path='/admin/master/jurusan/create' element={<JurusanCreate />} />
           <Route path='/admin/master/jurusan/:uuid' element={<JurusanDetail />} />
+          <Route path='/admin/master/jurusan/:uuid/create' element={<JurusanProfesiCreate />} />
           <Route path='/admin/master/profesi/:uuid/edit' element={<ProfesiEdit />} />
           <Route path='/admin/master/materi' element={<MasterMateri />} />
           <Route path='/admin/master/materi/:uuid' element={<MasterMateriDetail />} />
@@ -83,6 +87,8 @@ const App = () => {
             <Route path='materi/create' element={<MasterGuruMateriCreate />} />
             <Route path='materi/:uuid' element={<MasterGuruMateriDetail />} />
             <Route path='materi/:uuid/edit' element={<MasterGuruMateriEdit />} />
+            <Route path='konseling' element={<MasterKonseling />} />
+            <Route path='konseling/:uuid' element={<MasterKonselingDetail />} />
           </Route>
         </Route>
       </Routes>

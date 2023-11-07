@@ -81,7 +81,11 @@ const Konseling = () => {
                   ) : (
                     getCounselings.map((item, idx) => (
                       <tr key={idx} className="hover">
-                        <td className="align-top">{item.status}</td>
+                        <td className="align-top">
+                        <span className={`px-2 py-1 rounded ${item.status === 'PENDING' ? 'bg-gray-300' : item.status === 'BERLANGSUNG' ? 'bg-info' : 'bg-success'}`}>
+                          {item.status}
+                        </span>
+                      </td>
                         <td className="align-top">{item.subject}</td>
                         <td className="align-top">{item.content}</td>
                         <td className="align-top">
